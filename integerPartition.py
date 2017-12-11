@@ -25,13 +25,27 @@ class Integer_Partition(object):
             return self.recursion(n, n-1)+1
         else:
             return self.recursion(n, m-1)+self.recursion(n-m, m)
-
+    
+    def dynamic(self):
+        """使用动态规划的方法找到查分数，速度较快"""
+        num = self.x
+        tablet = [[0 for m in range(num)] for n in range(num)] # 构建动态规划表格
+        for n in range(num):
+            for m in range(num):
+                if n is 0 or m is 0:
+                    tablet[n][m] = 1
+                elif n <= m:
+                    tablet[n][m] = tablet[n][n-1]+1
+                else:
+                    tablet[n][m] = tablet[n][m-1]+tablet[n-m-1][m]
+        return tablet[-1][-1]
 
 
 def main():
     x = input('请输入目标整数：')
     intPart = Integer_Partition(int(x))
-    p = intPart.recursion_drive()
+    # p = intPart.recursion_drive()
+    p = intPart.dynamic()
     print(p)
 
 if __name__ == '__main__':
