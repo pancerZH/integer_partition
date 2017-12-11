@@ -1,19 +1,19 @@
 class Integer_Partition(object):
-    """这是一个整数拆分类，提供不同的拆分方法"""
-    def __init__(self, x):
-        self.x = x
-
-    def recursion_drive(self):
-        """
-        使用递归的方法找到拆分数，速度较慢
-        具体关系式为：
+    """
+    这是一个整数拆分类，提供不同的拆分方法\n
+    具体关系式为：
         q(n, m) = {  
             1  n=1 or m=1\n
             q(n, n)  n<m\n
             1+q(n, n-1)  n=m\n
             q(n, m-1)+1(n-m, m)  n>m  
         }
-        """
+    """
+    def __init__(self, x):
+        self.x = x
+
+    def recursion_drive(self):
+        """使用递归的方法找到拆分数，速度慢，占用栈空间大"""
         num = self.x
         return self.recursion(num, num)
 
@@ -27,7 +27,7 @@ class Integer_Partition(object):
             return self.recursion(n, m-1)+self.recursion(n-m, m)
     
     def dynamic(self):
-        """使用动态规划的方法找到拆分数，速度较快"""
+        """使用动态规划的方法找到拆分数，速度快，占用空间大"""
         num = self.x
         tablet = [[0 for m in range(num)] for n in range(num)] # 构建动态规划表格
         for n in range(num):
@@ -41,7 +41,7 @@ class Integer_Partition(object):
         return tablet[-1][-1]
 
     def generating(self):
-        """使用母函数的方法找到拆分数"""
+        """使用母函数的方法找到拆分数，速度快，占用空间小"""
         num = self.x
         poly1 = [1 for i in range(num+1)]
         poly2 = [0 for i in range(num+1)]
