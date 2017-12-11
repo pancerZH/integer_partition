@@ -27,7 +27,7 @@ class Integer_Partition(object):
             return self.recursion(n, m-1)+self.recursion(n-m, m)
     
     def dynamic(self):
-        """使用动态规划的方法找到查分数，速度较快"""
+        """使用动态规划的方法找到拆分数，速度较快"""
         num = self.x
         tablet = [[0 for m in range(num)] for n in range(num)] # 构建动态规划表格
         for n in range(num):
@@ -40,12 +40,26 @@ class Integer_Partition(object):
                     tablet[n][m] = tablet[n][m-1]+tablet[n-m-1][m]
         return tablet[-1][-1]
 
+    def generating(self):
+        """使用母函数的方法找到拆分数"""
+        num = self.x
+        poly1 = [1 for i in range(num+1)]
+        poly2 = [0 for i in range(num+1)]
+        for i in range(2, num+1): # 多项式代表的数字范围：[2, num]
+            for j in range(num+1): # 遍历poly1中每个项的幂j
+                for k in range(0, num+1-j, i):
+                    # 对于poly1中给定的幂j，poly2中提供的幂不得超过num-j
+                    poly2[k+j] += poly1[j] # 幂为k+j的项的系数增加1*poly1[j]
+            poly1 = poly2 # 将poly2中的计算结果转存到poly1中
+            poly2 = [0 for i in range(num+1)]
+        return poly1[num]
 
 def main():
     x = input('请输入目标整数：')
     intPart = Integer_Partition(int(x))
     # p = intPart.recursion_drive()
-    p = intPart.dynamic()
+    # p = intPart.dynamic()
+    p = intPart.generating()
     print(p)
 
 if __name__ == '__main__':
