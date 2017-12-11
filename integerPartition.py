@@ -1,3 +1,5 @@
+import time
+
 class Integer_Partition(object):
     """
     这是一个整数拆分类，提供不同的拆分方法\n
@@ -55,12 +57,35 @@ class Integer_Partition(object):
         return poly1[num]
 
 def main():
-    x = input('请输入目标整数：')
-    intPart = Integer_Partition(int(x))
-    # p = intPart.recursion_drive()
-    # p = intPart.dynamic()
-    p = intPart.generating()
-    print(p)
+    while(1):
+        x = input('Enter the target integer(0 to quit): ')
+        if int(x) <= 0:
+            break
+        intPart = Integer_Partition(int(x))
+
+        print('\nDealing way\t\tCPU time')
+        if int(x) <= 80:
+            start = time.clock()
+            p = intPart.recursion_drive()
+            end = time.clock()
+            time1 = end-start
+            print('Recursion:\t\t{} s'.format(time1))
+        else:
+            print('Recursion:\t\ttoo long!')
+        
+        start = time.clock()
+        p = intPart.dynamic()
+        end = time.clock()
+        time2 = end-start
+
+        start = time.clock()
+        p = intPart.generating()
+        end = time.clock()
+        time3 = end-start
+
+        print('Dynamic planning:\t{} s'.format(time2))
+        print('Generating function:\t{} s'.format(time3))
+        print('\np({}) = {}'.format(x, p))
 
 if __name__ == '__main__':
     main()
