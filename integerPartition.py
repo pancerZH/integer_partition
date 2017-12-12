@@ -74,18 +74,19 @@ def main():
             print('Recursion:\t\ttoo long!')
         
         start = time.clock()
-        p = intPart.dynamic()
+        p1 = intPart.dynamic()
         end = time.clock()
         time2 = end-start
+        print('Dynamic planning:\t{} s'.format(time2))
 
         start = time.clock()
-        p = intPart.generating()
+        p2 = intPart.generating()
         end = time.clock()
         time3 = end-start
-
-        print('Dynamic planning:\t{} s'.format(time2))
         print('Generating function:\t{} s'.format(time3))
-        print('\np({}) = {}'.format(x, p))
+
+        assert p1 == p2
+        print('\np({}) = {}'.format(x, p1))
 
 if __name__ == '__main__':
     main()
