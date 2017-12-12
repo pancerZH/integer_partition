@@ -80,13 +80,16 @@ def main():
         time2 = end-start
         print('Dynamic planning:\t{} s'.format(time2))
 
-        start = time.clock()
-        p2 = intPart.generating()
-        end = time.clock()
-        time3 = end-start
-        print('Generating function:\t{} s'.format(time3))
+        if int(x) <= 2000:
+            start = time.clock()
+            p2 = intPart.generating()
+            end = time.clock()
+            time3 = end-start
+            print('Generating function:\t{} s'.format(time3))
+            assert p1 == p2
+        else:
+            print('Generating function:\ttoo long!')
 
-        assert p1 == p2
         print('\np({}) = {}'.format(x, p1))
 
 if __name__ == '__main__':
