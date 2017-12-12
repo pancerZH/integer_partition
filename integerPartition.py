@@ -31,16 +31,16 @@ class Integer_Partition(object):
     def dynamic(self):
         """使用动态规划的方法找到拆分数，速度快，占用空间大"""
         num = self.x
-        tablet = [[0 for m in range(num)] for n in range(num)] # 构建动态规划表格
+        table = [[0 for m in range(num)] for n in range(num)] # 构建动态规划表格
         for n in range(num):
             for m in range(num):
                 if n is 0 or m is 0:
-                    tablet[n][m] = 1
+                    table[n][m] = 1
                 elif n <= m:
-                    tablet[n][m] = tablet[n][n-1]+1
+                    table[n][m] = table[n][n-1]+1
                 else:
-                    tablet[n][m] = tablet[n][m-1]+tablet[n-m-1][m]
-        return tablet[-1][-1]
+                    table[n][m] = table[n][m-1]+table[n-m-1][m]
+        return table[-1][-1]
 
     def generating(self):
         """使用母函数的方法找到拆分数，速度快，占用空间小"""
