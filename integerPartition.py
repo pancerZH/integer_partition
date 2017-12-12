@@ -51,7 +51,7 @@ class Integer_Partition(object):
         for i in range(2, num+1): # g(x, i)中i的范围：[2, num]
             for j in range(num+1): # 遍历poly1中的每个项
                 for k in range(0, num+1-j, i):
-                    # 对于poly1中给定的幂j，g(x, i)中提供的幂不得超过num-j
+                    # 对于poly1中给定的幂j，g(x, i)中提供的项的幂不得超过num-j
                     poly2[k+j] += poly1[j] # 幂为k+j的项的系数增加1*poly1[j]
             poly1 = poly2 # 将poly2中的计算结果转存到poly1中
             poly2 = [0 for i in range(num+1)]
