@@ -15,7 +15,7 @@ class Integer_Partition(object):
         self.x = x
 
     def recursion_drive(self):
-        """使用递归的方法找到拆分数，速度慢，占用栈空间大"""
+        """使用递归的方法计算拆分数，速度慢，占用栈空间大"""
         num = self.x
         return self.recursion(num, num)
 
@@ -29,7 +29,7 @@ class Integer_Partition(object):
             return self.recursion(n, m-1)+self.recursion(n-m, m)
     
     def dynamic(self):
-        """使用动态规划的方法找到拆分数，速度快，占用空间大"""
+        """使用动态规划的方法计算拆分数，速度快，占用空间大"""
         num = self.x
         table = [[0 for m in range(num)] for n in range(num)] # 构建动态规划表格
         for n in range(num):
@@ -43,7 +43,7 @@ class Integer_Partition(object):
         return table[-1][-1]
 
     def generating(self):
-        """使用母函数的方法找到拆分数，速度快，占用空间小"""
+        """使用母函数的方法计算拆分数，速度快，占用空间小"""
         num = self.x
         # 两个多项式相乘，poly1存放最终结果，poly2存放中间结果
         poly1 = [1 for i in range(num+1)]  # 现在代表g(x, 1)
@@ -92,39 +92,46 @@ def main():
         intPart = Integer_Partition(int(x))
 
         print('\nDealing way\t\tCPU time')
+        result_list = []
         if int(x) <= 80:
             start = time.clock()
-            p = intPart.recursion_drive()
+            p1 = intPart.recursion_drive()
             end = time.clock()
             time1 = end-start
+            result_list.append(p1)
             print('Recursion:\t\t{} s'.format(time1))
         else:
             print('Recursion:\t\ttoo long!')
-        
-        start = time.clock()
-        p1 = intPart.dynamic()
-        end = time.clock()
-        time2 = end-start
-        print('Dynamic planning:\t{} s'.format(time2))
 
         if int(x) <= 2000:
             start = time.clock()
             p2 = intPart.generating()
             end = time.clock()
-            time3 = end-start
-            print('Generating function:\t{} s'.format(time3))
-            assert p1 == p2
+            time2 = end-start
+            result_list.append(p2)
+            print('Generating function:\t{} s'.format(time2))
         else:
             print('Generating function:\ttoo long!')
+        
+        if int(x) <= 3000:
+            start = time.clock()
+            p3 = intPart.dynamic()
+            end = time.clock()
+            time3 = end-start
+            result_list.append(p3)
+            print('Dynamic planning:\t{} s'.format(time3))
+        else:
+            print('Dynamic planning:\ttoo long!')
 
         start = time.clock()
-        p3 = intPart.pentagonal_number()
+        p4 = intPart.pentagonal_number()
         end = time.clock()
         time4 = end-start
         print('Pentagonal number:\t{} s'.format(time4))
-        assert p3 == p1
+        for result in result_list:
+            assert p4 == result, 'wrong answer!'
 
-        print('\np({}) = {}'.format(x, p1))
+        print('\np({}) = {}'.format(x, p4))
 
 if __name__ == '__main__':
     main()
