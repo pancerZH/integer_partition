@@ -57,6 +57,33 @@ class Integer_Partition(object):
             poly2 = [0 for i in range(num+1)]
         return poly1[num]
 
+    def pentagonal_number(self):
+        """使用五边形数定理计算拆分数，速度快，占用空间小"""
+        num = self.x
+        # 构建辅助数组
+        assist = []
+        for i in range(1, num):
+            assist.append(int(i*(i*3-1)/2))
+            assist.append(int(i*(i*3+1)/2))
+
+        # 构建由1~num的拆分数列表
+        p_list = [1, 1, 2]
+        for i in range(3, num+1):
+            count = 0
+            p = 0
+            for j in range(0, i):
+                if assist[j] > i:
+                    break
+                count %= 4
+                if count is 0 or count is 1:
+                    p += p_list[i-assist[j]]
+                else:
+                    p -= p_list[i-assist[j]]
+                count += 1
+            p_list.append(p)
+        
+        return p_list[num]
+
 def main():
     while(1):
         x = input('Enter the target integer(0 to quit): ')
@@ -89,6 +116,13 @@ def main():
             assert p1 == p2
         else:
             print('Generating function:\ttoo long!')
+
+        start = time.clock()
+        p3 = intPart.pentagonal_number()
+        end = time.clock()
+        time4 = end-start
+        print('Pentagonal number:\t{} s'.format(time4))
+        assert p3 == p1
 
         print('\np({}) = {}'.format(x, p1))
 
