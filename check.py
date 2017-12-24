@@ -23,20 +23,22 @@ def pentagonal_number(x):
                 count += 1
             p_list.append(p)
         
-        return p_list[num]
+        return p_list
 
 
 def main():
-    for m in range(0, 101):
-        p = pentagonal_number(5*m+4)
+    max_m = 1000
+    p_list = pentagonal_number(11*max_m+6)
+    for m in range(0, 1001):
+        p = p_list[5*m+4]
         assert p % 5 == 0, '5*{}+4 failed!'.format(m)
-        p = pentagonal_number(7*m+5)
+        p = p_list[7*m+5]
         assert p % 7 == 0, '7*{}+5 failed!'.format(m)
-        p = pentagonal_number(11*m+6)
+        p = p_list[11*m+6]
         assert p % 11 == 0, '11*{}+6 failed!'.format(m)
 
         print('m={} checked'.format(m))
-    print('{} to {} all checked!'.format(0, 100))
+    print('{} to {} all checked!'.format(0, max_m))
 
 if __name__ == '__main__':
     main()
